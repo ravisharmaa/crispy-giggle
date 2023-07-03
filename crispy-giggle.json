@@ -1,0 +1,3509 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Arplace API",
+    "version": "4.5.0",
+    "description": "This API provides endpoints used for the arplace apps",
+    "contact": {
+      "name": "brainformance",
+      "url": "https://brainformance.at/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://test.arplace.bf-projects.at/api/{version}",
+      "variables": {
+        "version": {
+          "default": "v4"
+        }
+      }
+    },
+    {
+      "url": "https://api.arplace.eu/api/{version}",
+      "variables": {
+        "version": {
+          "default": "v4"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/assets": {
+      "post": {
+        "operationId": "upload-asset",
+        "summary": "Upload an asset to the server",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UploadAssetBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "assets"
+        ]
+      }
+    },
+    "/assets/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "get": {
+        "operationId": "get-asset-with-id",
+        "summary": "gets asset with given IDs",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "assets"
+        ]
+      },
+      "put": {
+        "operationId": "update-asset-with-id",
+        "summary": "update asset information for the given IDs",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/APIVirtualAssetBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "assets"
+        ]
+      },
+      "delete": {
+        "operationId": "delete-asset-with-id",
+        "summary": "deletes the asset with the given ID from the server",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "assets"
+        ]
+      }
+    },
+    "/assets/get": {
+      "post": {
+        "operationId": "get-assets",
+        "summary": "Get a list of VirtualAssets with specified IDs",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/QueryIDs"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetListResponseWithInfos"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "assets"
+        ]
+      }
+    },
+    "/layers/get": {
+      "post": {
+        "operationId": "get-layer",
+        "summary": "Returns the layers with given ids",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/QueryIDs"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APILayerListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers": {
+      "get": {
+        "operationId": "list-layers",
+        "summary": "Returns a list of all layers available to the current user",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APILayerListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      },
+      "post": {
+        "operationId": "create-layer",
+        "summary": "Creates a layer",
+        "description": "Creates a new layer with the current user as owner and returns the created layer object containing the id",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/LayerBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APILayerResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "put": {
+        "operationId": "update-layer",
+        "summary": "Updates a layer",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/LayerBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APILayerResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      },
+      "delete": {
+        "operationId": "delete-layer",
+        "summary": "Deletes a layer",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "Layer deleted"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}/followers": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "get": {
+        "operationId": "get-layer-followers",
+        "summary": "Lists all followers of a layer",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      },
+      "post": {
+        "operationId": "follow-layer",
+        "summary": "Adds the current user to the followers",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      },
+      "delete": {
+        "operationId": "unfollow-layer",
+        "summary": "Removes the current user from the followers",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}/users-member-status": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        },
+        {
+          "$ref": "#/components/parameters/QueryFilterQuery"
+        }
+      ],
+      "get": {
+        "operationId": "list-users-member-status",
+        "summary": "List users with their member status to the given layer",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserLayerMemberStatusListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}/invites": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "post": {
+        "operationId": "invite-to-layer",
+        "summary": "Invites the users in the request-list to the layer",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/APIUserRoleListBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}/invites/accept": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "post": {
+        "operationId": "accept-invite-to-layer",
+        "summary": "Accepts an open invite for the layer",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "Invite accepted"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}/invites/reject": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "post": {
+        "operationId": "reject-invite-to-layer",
+        "summary": "Rejects an open invite for the layer",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "Invite rejected"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}/image": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "post": {
+        "operationId": "set-layer-image",
+        "summary": "Sets the preview image of the layer with the specified id",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIImageResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ImageBody"
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}/members": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "get": {
+        "operationId": "get-layer-members",
+        "summary": "Lists all members of a layer including their permissions",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserRoleListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      },
+      "post": {
+        "operationId": "join-layer",
+        "summary": "Adds the current user to the layers members if the layer visibility is public",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "Current user added to the layer"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      },
+      "put": {
+        "operationId": "overwrite-layer-members",
+        "summary": "Overwrites all members of a layer including their permissions",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/APIUserRoleListBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserRoleListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      },
+      "patch": {
+        "operationId": "update-layer-members",
+        "summary": "Updates all members of a layer including their permissions",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/APIUserRoleListBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserRoleListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      },
+      "delete": {
+        "operationId": "leave-layer",
+        "summary": "Removes the current user from the layers members",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "Current user removed from the layer"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}/members/{userId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        },
+        {
+          "in": "path",
+          "name": "userId",
+          "schema": {
+            "$ref": "#/components/schemas/APIIDField"
+          },
+          "required": true
+        }
+      ],
+      "delete": {
+        "operationId": "remove-member-from-layer",
+        "summary": "Removes the given {userId} from the layer members",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "User removed from the layer"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/roles": {
+      "get": {
+        "operationId": "list-layer-roles",
+        "summary": "Gives a list of available roles",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIRoleListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/layers/{id}/assets": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        },
+        {
+          "$ref": "#/components/parameters/QueryLimit"
+        }
+      ],
+      "get": {
+        "operationId": "get-layer-assets",
+        "summary": "Lists assets of a layer",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "layers"
+        ]
+      }
+    },
+    "/library/assets": {
+      "get": {
+        "operationId": "list-library",
+        "summary": "Returns all assets in the user library",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryFilterQuery"
+          },
+          {
+            "$ref": "#/components/parameters/QueryStart"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "library"
+        ]
+      },
+      "post": {
+        "operationId": "creates-library-asset",
+        "summary": "Adds specified assets to the user library",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/QueryIDs"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "library"
+        ]
+      }
+    },
+    "/library/count": {
+      "get": {
+        "operationId": "count-library",
+        "summary": "Returns the number of assets in \"my objects\"",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetCountResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "library"
+        ]
+      }
+    },
+    "/library/assets/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "delete": {
+        "operationId": "delete-library-assets",
+        "summary": "Deletes the specified asset owned by the user",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "library"
+        ]
+      }
+    },
+    "/marketplace/assets": {
+      "get": {
+        "operationId": "list-marketplace-assets",
+        "summary": "Returns all available virtual assets from the marketplace. Further filtered by query if given.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryStart"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          },
+          {
+            "$ref": "#/components/parameters/QueryFilterUserIDs"
+          },
+          {
+            "$ref": "#/components/parameters/QueryFilterQuery"
+          },
+          {
+            "$ref": "#/components/parameters/QueryExcludeAssetIDs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "marketplace"
+        ]
+      },
+      "post": {
+        "operationId": "add-asset-to-marketplace",
+        "summary": "Adds the specified user assets to the marketplace",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/QueryIDs"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "marketplace"
+        ]
+      }
+    },
+    "/marketplace/count": {
+      "get": {
+        "operationId": "count-marketplace-assets",
+        "summary": "Returns the number of available virtual assets in the marketplace.",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetCountResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "marketplace"
+        ]
+      }
+    },
+    "/marketplace/assets/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "delete": {
+        "operationId": "delete-asset-from-marketplace",
+        "summary": "Removes the specified user asset from the marketplace",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAssetListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "marketplace"
+        ]
+      }
+    },
+    "/placements": {
+      "post": {
+        "operationId": "add-placement",
+        "summary": "Places a virtual asset from the library in the world",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PlacementBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIPlacementResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "placements"
+        ]
+      }
+    },
+    "/placements/{id}": {
+      "put": {
+        "operationId": "update-placement",
+        "summary": "Updates a placement",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PlacementBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIPlacementResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "placements"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "delete": {
+        "operationId": "delete-placement",
+        "summary": "Deletes a placement",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "Placement deleted"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "placements"
+        ]
+      }
+    },
+    "/placements/at": {
+      "get": {
+        "operationId": "list-surrounding-placements",
+        "summary": "Returns all placements of a given location (lat,long) sorted by distance.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "in": "query",
+            "required": true,
+            "name": "latitude",
+            "description": "latitude of current position"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "in": "query",
+            "required": true,
+            "name": "longitude",
+            "description": "longitude of current position"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/APIIDField"
+              }
+            },
+            "in": "query",
+            "name": "filter[layer.ids]",
+            "explode": false,
+            "description": "Only returns layers given in filter"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIPlacementListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "placements"
+        ]
+      }
+    },
+    "/profile": {
+      "get": {
+        "operationId": "get-profile",
+        "summary": "Get the current user profile",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIProfileResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "profile"
+        ]
+      },
+      "put": {
+        "operationId": "overwrite-profile",
+        "summary": "Overwrites the complete user profile",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProfileBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIProfileResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "profile"
+        ]
+      },
+      "patch": {
+        "operationId": "update-profile",
+        "summary": "Updates (parts of) the user profile",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProfileBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIProfileResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "profile"
+        ]
+      },
+      "delete": {
+        "operationId": "delete-profile",
+        "summary": "Deletes the current user's profile",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "User deleted"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "profile"
+        ]
+      }
+    },
+    "/profile/password": {
+      "put": {
+        "operationId": "update-password",
+        "summary": "Updates the password of the current user profile",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProfilePasswordBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIProfileResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "profile"
+        ]
+      }
+    },
+    "/profile/image": {
+      "post": {
+        "operationId": "set-profile-image",
+        "summary": "Sets the preview image of the current user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ImageBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIImageResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "profile"
+        ]
+      }
+    },
+    "/sessions": {
+      "post": {
+        "operationId": "create-session",
+        "summary": "Creates a session",
+        "description": "Stores the content data from the request body and returns the created session id",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/SessionBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APISessionResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/sessions/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "get": {
+        "operationId": "get-session",
+        "summary": "Get a sessions data",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APISessionResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "sessions"
+        ]
+      },
+      "put": {
+        "operationId": "update-session",
+        "summary": "Updates a sessions data",
+        "description": "The content data for the specified session is updated. Returns 404 if no session with the specified id was found",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/APISession"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APISessionResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "sessions"
+        ]
+      }
+    },
+    "/user/followers": {
+      "get": {
+        "operationId": "get-user-followers",
+        "summary": "Lists all followers of the current user",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "post": {
+        "operationId": "follow-user",
+        "summary": "Follows the users with the specified ids",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/QueryIDs"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/followers/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "delete": {
+        "operationId": "unfollow-user",
+        "summary": "Unfollows the user with the specified id",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/friends": {
+      "get": {
+        "operationId": "list-friends",
+        "summary": "Lists all friends of the current user",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryStart"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/friends/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "delete": {
+        "operationId": "delete-friends",
+        "summary": "Deletes the friend with given id",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserListResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/friends/requests": {
+      "get": {
+        "operationId": "list-friend-requests",
+        "summary": "Get pending friend requests",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryStart"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "post": {
+        "operationId": "send-friend-request",
+        "summary": "Sends a friend request to the users with the specified user ids",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/QueryIDs"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/friends/requests/{id}/accept": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "post": {
+        "operationId": "accept-friend-request",
+        "summary": "Accept a pending friend request",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "Friend request accepted"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/friends/requests/{id}/refuse": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathId"
+        }
+      ],
+      "post": {
+        "operationId": "refuse-friend-request",
+        "summary": "Refuses a pending friend request",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GoodBaseResponse",
+            "description": "Friend request refused"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/profiles/get": {
+      "post": {
+        "operationId": "get-community-profiles",
+        "summary": "Lists all public user information of given ids",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/QueryIDs"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/layers": {
+      "get": {
+        "operationId": "list-layers-of-user",
+        "summary": "Returns all available layers for the current user. Further filtered by query if given.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryFilterSearch"
+          },
+          {
+            "$ref": "#/components/parameters/QueryFilterOwner"
+          },
+          {
+            "$ref": "#/components/parameters/QueryFilterID"
+          },
+          {
+            "$ref": "#/components/parameters/QueryStart"
+          },
+          {
+            "$ref": "#/components/parameters/QueryLimit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APILayerListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/notifications": {
+      "get": {
+        "operationId": "list-notifications",
+        "summary": "Lists all available notifications for the current user",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryFilterFrom"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APINotificationListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/notifications/read": {
+      "post": {
+        "operationId": "mark-notification-read",
+        "summary": "Marks all given notification with boolean flag read",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/QueryIDs"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APINotificationResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/services/countries": {
+      "get": {
+        "operationId": "list-countries",
+        "summary": "Lists all available countries to choose from along with their flag icons",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APICountryListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "services"
+        ]
+      }
+    },
+    "/services/get-username-suggestions": {
+      "post": {
+        "operationId": "get-username-suggestions",
+        "summary": "Gets an array of random username suggestions from the API",
+        "security": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UsernameBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUsernameSuggestionsResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "services"
+        ]
+      }
+    },
+    "/services/is-email-available": {
+      "post": {
+        "operationId": "is-email-available",
+        "summary": "Checks if the email is available for use or already occupied by another account",
+        "security": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EmailBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAvailabilityResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "services"
+        ]
+      }
+    },
+    "/services/is-username-available": {
+      "post": {
+        "operationId": "is-username-available",
+        "summary": "Checks if the username is available for use or already occupied by another account",
+        "security": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UsernameBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAvailabilityResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "services"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "login",
+        "summary": "Login the user",
+        "security": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/LoginBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAccesstokenResponse"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "423": {
+            "$ref": "#/components/responses/LockedError"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/refresh-token": {
+      "post": {
+        "operationId": "refresh-token",
+        "summary": "Refresh the APIToken using a refresh-token",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "refresh_token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIAccesstokenResponse"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "register",
+        "summary": "Tries to register a new account",
+        "security": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/RegisterBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIProfileResponse"
+          },
+          "422": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "operationId": "forgot-password",
+        "summary": "Starts the flow for resetting a users password",
+        "security": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/EmailBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIPasswordResetResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/password-reset/{token}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/PathToken"
+        }
+      ],
+      "get": {
+        "operationId": "verify-reset-token",
+        "summary": "Fetches the user, that the token was made for, from the API if the token is still valid",
+        "security": [],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIResetTokenUserResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      },
+      "post": {
+        "operationId": "attempt-password-reset",
+        "summary": "Sends the token that was received via mail and the new password to the server to be checked",
+        "security": [],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ResetPasswordBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIPasswordResetResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "operationId": "list-all-users",
+        "summary": "Returns a list of all available users",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QueryFilterSearch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/APIUserListResponse"
+          },
+          "default": {
+            "$ref": "#/components/responses/BadBaseResponse"
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "PathId": {
+        "in": "path",
+        "name": "id",
+        "schema": {
+          "$ref": "#/components/schemas/APIIDField"
+        },
+        "required": true
+      },
+      "PathToken": {
+        "in": "path",
+        "name": "token",
+        "schema": {
+          "$ref": "#/components/schemas/APIResetToken"
+        },
+        "required": true
+      },
+      "QueryLimit": {
+        "in": "query",
+        "name": "limit",
+        "description": "The number of records to return",
+        "schema": {
+          "type": "integer",
+          "example": 100
+        }
+      },
+      "QueryStart": {
+        "in": "query",
+        "name": "start",
+        "description": "The number of records to skip",
+        "schema": {
+          "type": "integer",
+          "example": 100
+        }
+      },
+      "QueryFilterSearch": {
+        "in": "query",
+        "name": "filter[search]",
+        "description": "The free text search phrase",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "QueryFilterQuery": {
+        "in": "query",
+        "name": "query",
+        "description": "The free text search phrase",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "QueryAssetIDs": {
+        "in": "query",
+        "name": "ids",
+        "description": "array of assetIDs to be fetched",
+        "style": "form",
+        "explode": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/APIIDField"
+          }
+        },
+        "required": true
+      },
+      "QueryFilterOwner": {
+        "in": "query",
+        "name": "filter[owner]",
+        "description": "filter by \"owner\"",
+        "schema": {
+          "$ref": "#/components/schemas/APIIDField"
+        }
+      },
+      "QueryFilterID": {
+        "in": "query",
+        "name": "filter[id]",
+        "description": "filter by \"id\"",
+        "schema": {
+          "$ref": "#/components/schemas/APIIDField"
+        }
+      },
+      "QueryFilterFrom": {
+        "in": "query",
+        "name": "filter[from]",
+        "description": "filter by \"from\"",
+        "schema": {
+          "$ref": "#/components/schemas/APIIDField"
+        }
+      },
+      "QueryFilterUserIDs": {
+        "in": "query",
+        "name": "filter[user.ids]",
+        "description": "filter by \"user.ids\"",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/APIIDField"
+          }
+        }
+      },
+      "QueryExcludeAssetIDs": {
+        "in": "query",
+        "name": "exclude[asset.ids]",
+        "description": "exclde any in \"asset.ids\"",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/APIIDField"
+          }
+        }
+      }
+    },
+    "schemas": {
+      "APIProfileData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/APIIDField"
+          },
+          "email": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/APIEmail"
+              },
+              {
+                "readOnly": true
+              }
+            ]
+          },
+          "username": {
+            "$ref": "#/components/schemas/APIUsername"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Alice"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Smith"
+          },
+          "dateOfBirth": {
+            "$ref": "#/components/schemas/APIDateOnly"
+          },
+          "emailVerified": {
+            "type": "boolean",
+            "description": "Set to true if the user's email has been verified.",
+            "readOnly": true,
+            "example": false
+          },
+          "profileImageUrl": {
+            "$ref": "#/components/schemas/APIImageURL"
+          },
+          "timestamps": {
+            "$ref": "#/components/schemas/APITimestamps"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "country": {
+            "$ref": "#/components/schemas/APICountryCode"
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "streetNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryFlagUrl": {
+            "$ref": "#/components/schemas/APIImageURL"
+          }
+        }
+      },
+      "APIPassword": {
+        "type": "string",
+        "minLength": 8,
+        "maxLength": 32,
+        "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!\"#$%&()*+,.:;<=>?@^_`\\[\\]\\-\\/\\\\]).{8,32}$",
+        "description": "Password for the given user",
+        "example": "6mkYYxC!QPxU0tKZ4XmsL"
+      },
+      "APIUser": {
+        "type": "object",
+        "description": "All publicly available data of a user",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/APIIDField"
+          },
+          "username": {
+            "$ref": "#/components/schemas/APIUsername"
+          },
+          "profileImageUrl": {
+            "$ref": "#/components/schemas/APIImageURL"
+          },
+          "enableUserUpload": {
+            "$ref": "#/components/schemas/APIEnableUserUploadFlag"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "APIIDField": {
+        "description": "unique ID of the respective resource",
+        "type": "integer",
+        "readOnly": true,
+        "example": 123
+      },
+      "APILayer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/APIIDField"
+          },
+          "name": {
+            "type": "string"
+          },
+          "alias": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "tags": {
+            "$ref": "#/components/schemas/APITagList"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "private",
+              "public",
+              "global"
+            ]
+          },
+          "isUserDefault": {
+            "type": "boolean",
+            "readOnly": true,
+            "default": false
+          },
+          "previewImageUrl": {
+            "$ref": "#/components/schemas/APIImageURL"
+          },
+          "timestamps": {
+            "$ref": "#/components/schemas/APITimestamps"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/APIUser"
+          },
+          "statistics": {
+            "properties": {
+              "memberCount": {
+                "type": "number",
+                "format": "integer",
+                "readOnly": true,
+                "default": 0
+              }
+            }
+          },
+          "self": {
+            "properties": {
+              "role": {
+                "$ref": "#/components/schemas/APIRole"
+              }
+            }
+          }
+        },
+        "required": [
+          "name",
+          "visibility"
+        ]
+      },
+      "APIVirtualAsset": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/APIIDField"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "default": ""
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "default": ""
+          },
+          "ageRating": {
+            "$ref": "#/components/schemas/APIAgeRating"
+          },
+          "onMarketplace": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          },
+          "owner": {
+            "$ref": "#/components/schemas/APIUser"
+          },
+          "tags": {
+            "$ref": "#/components/schemas/APITagList"
+          },
+          "previewImageUrl": {
+            "$ref": "#/components/schemas/APIImageURL"
+          },
+          "binaryUrl": {
+            "type": "string",
+            "format": "uri",
+            "nullable": false,
+            "readOnly": true
+          },
+          "timestamps": {
+            "$ref": "#/components/schemas/APITimestamps"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/APIAssetStatistics"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "tags"
+        ]
+      },
+      "APIPlacement": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/APIIDField"
+          },
+          "ownerId": {
+            "$ref": "#/components/schemas/APIIDField"
+          },
+          "layerId": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/APIIDField"
+              },
+              {
+                "readOnly": false
+              }
+            ]
+          },
+          "assetId": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/APIIDField"
+              },
+              {
+                "readOnly": false
+              }
+            ]
+          },
+          "transformData": {
+            "$ref": "#/components/schemas/APITransformData"
+          },
+          "position": {
+            "$ref": "#/components/schemas/APILatLong"
+          },
+          "customObjectData": {
+            "$ref": "#/components/schemas/APICustomObjectData"
+          },
+          "timestamps": {
+            "$ref": "#/components/schemas/APITimestamps"
+          }
+        },
+        "required": [
+          "layerId",
+          "assetId",
+          "position",
+          "transformData"
+        ]
+      },
+      "APILatLong": {
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": false,
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double",
+            "nullable": false,
+            "minimum": -180,
+            "maximum": 180
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ]
+      },
+      "APIVector3": {
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "z": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      "APIVector4": {
+        "properties": {
+          "w": {
+            "type": "number"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "z": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "z",
+          "w"
+        ]
+      },
+      "APITransformData": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "$ref": "#/components/schemas/APIVector3"
+          },
+          "scale": {
+            "$ref": "#/components/schemas/APIVector3"
+          },
+          "rotation": {
+            "$ref": "#/components/schemas/APIVector4"
+          }
+        },
+        "required": [
+          "scale",
+          "rotation",
+          "position"
+        ]
+      },
+      "APICustomObjectData": {
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/APIColor"
+          }
+        }
+      },
+      "APIColor": {
+        "properties": {
+          "R": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "G": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "B": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "A": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "R",
+          "G",
+          "B",
+          "A"
+        ]
+      },
+      "APISession": {
+        "properties": {
+          "sessionId": {
+            "$ref": "#/components/schemas/APIIDField"
+          },
+          "containedAssetIDs": {
+            "type": "array",
+            "description": "The IDs of assets contained in this session",
+            "items": {
+              "$ref": "#/components/schemas/APIIDField"
+            }
+          },
+          "content": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "required": [
+          "sessionId"
+        ]
+      },
+      "APIDateTime": {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "(\\d\\d\\d\\d)(-)?(\\d\\d)(-)?(\\d\\d)(T)?(\\d\\d)(:)?(\\d\\d)(:)?(\\d\\d)(\\.\\d+)?(Z|([+-])(\\d\\d)(:)?(\\d\\d))",
+        "description": "datetime object in ISO8601 format",
+        "example": "2022-03-21T01:23:45Z"
+      },
+      "APIDateOnly": {
+        "type": "string",
+        "format": "date",
+        "pattern": "(\\d\\d\\d\\d)(-)?(\\d\\d)(-)?(\\d\\d)",
+        "description": "date object",
+        "example": "2022-03-21"
+      },
+      "APITimestamps": {
+        "readOnly": true,
+        "properties": {
+          "updated": {
+            "$ref": "#/components/schemas/APIDateTime"
+          },
+          "created": {
+            "$ref": "#/components/schemas/APIDateTime"
+          }
+        }
+      },
+      "GoodBaseSchema": {
+        "description": "Base definition of any \"positive\" API response, defining only the data field.",
+        "properties": {
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      "BadBaseSchema": {
+        "description": "Base definition of any \"negative\" API response, defining only the error field.",
+        "properties": {
+          "error": {
+            "readOnly": true,
+            "nullable": false,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/APIBadRequestError"
+              },
+              {
+                "$ref": "#/components/schemas/APIAccessDeniedError"
+              },
+              {
+                "$ref": "#/components/schemas/APINotFoundError"
+              },
+              {
+                "$ref": "#/components/schemas/APIValidationError"
+              },
+              {
+                "$ref": "#/components/schemas/APILockedError"
+              },
+              {
+                "$ref": "#/components/schemas/APITooManyRequestsError"
+              },
+              {
+                "$ref": "#/components/schemas/APIServiceUnavailableError"
+              }
+            ]
+          }
+        }
+      },
+      "APIListResponse": {
+        "description": "Definition of the APIResponse base class, that any other response derives from",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GoodBaseSchema"
+          },
+          {
+            "properties": {
+              "meta": {
+                "type": "object",
+                "properties": {
+                  "page": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "type": "integer"
+                      },
+                      "limit": {
+                        "type": "integer"
+                      },
+                      "cursor": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "APISessionSchema": {
+        "description": "Defines responses containing session data",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GoodBaseSchema"
+          },
+          {
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/APISession"
+              }
+            }
+          }
+        ]
+      },
+      "APIProfileSchema": {
+        "description": "Defines responses containing profile data",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GoodBaseSchema"
+          },
+          {
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/APIProfileData"
+              }
+            }
+          }
+        ]
+      },
+      "APILayerSchema": {
+        "description": "Defines responses containing data of a single layer",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GoodBaseSchema"
+          },
+          {
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/APILayer"
+              }
+            }
+          }
+        ]
+      },
+      "APILayerListSchema": {
+        "description": "Defines responses containing data of multiple layers",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIListResponse"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/APILayer"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "APIAssetListSchema": {
+        "description": "Defines responses containing data of multiple assets",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIListResponse"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/APIVirtualAsset"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "APIUserSchema": {
+        "description": "Defines responses containing data of a single user",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GoodBaseSchema"
+          },
+          {
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/APIUser"
+              }
+            }
+          }
+        ]
+      },
+      "APIUserListSchema": {
+        "description": "Defines responses containing data of multiple users",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIListResponse"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/APIUser"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "APIPlacementSchema": {
+        "description": "Defines responses containing data of a single placement",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GoodBaseSchema"
+          },
+          {
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/APIPlacement"
+              }
+            }
+          }
+        ]
+      },
+      "APIPlacementListSchema": {
+        "description": "Defines responses containing data of multiple placements",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIListResponse"
+          },
+          {
+            "properties": {
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/APIPlacement"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "APIAssetSchema": {
+        "description": "Defines responses containing data of a single asset",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GoodBaseSchema"
+          },
+          {
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/APIVirtualAsset"
+              }
+            }
+          }
+        ]
+      },
+      "APIImageURL": {
+        "type": "string",
+        "format": "url",
+        "description": "Defines the URL of an image within the API",
+        "readOnly": true,
+        "example": "https://www.arplace.io/wp-content/uploads/2022/02/Logo-Website_compressed-300x244.png",
+        "nullable": true
+      },
+      "APIImage": {
+        "type": "string",
+        "format": "binary",
+        "description": "Defines an image to be uploaded to the API",
+        "writeOnly": true
+      },
+      "APIAdditionalInfos": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "object",
+            "properties": {
+              "missing": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/APIIDField"
+                }
+              }
+            }
+          }
+        }
+      },
+      "APICountryCode": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z]$"
+      },
+      "APICountry": {
+        "properties": {
+          "value": {
+            "$ref": "#/components/schemas/APICountryCode"
+          },
+          "title": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "value",
+          "title"
+        ]
+      },
+      "APICountryListSchema": {
+        "description": "Defines responses containing data of multiple countries",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/APICountry"
+        }
+      },
+      "APIUsername": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 32,
+        "example": "creative_username",
+        "description": "chosen username"
+      },
+      "APIEmail": {
+        "type": "string",
+        "format": "email",
+        "pattern": "^[a-zA-Z0-9_!#$%&â€™*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$",
+        "example": "address@mail.com",
+        "description": "chosen email"
+      },
+      "APIAvailabilityFlag": {
+        "description": "Responds true if requested resource is available, false otherwise",
+        "properties": {
+          "isAvailable": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": false
+          }
+        }
+      },
+      "APIEnableUserUploadFlag": {
+        "description": "Responds true if user is allowed to upload, false otherwise",
+        "type": "boolean",
+        "readOnly": true,
+        "nullable": false
+      },
+      "APIRegistrationData": {
+        "description": "Defines data required for registration",
+        "type": "object",
+        "properties": {
+          "username": {
+            "$ref": "#/components/schemas/APIUsername"
+          },
+          "email": {
+            "$ref": "#/components/schemas/APIEmail"
+          },
+          "country": {
+            "$ref": "#/components/schemas/APICountryCode"
+          },
+          "password": {
+            "$ref": "#/components/schemas/APIPassword"
+          },
+          "password_confirmation": {
+            "$ref": "#/components/schemas/APIPassword"
+          },
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "$ref": "#/components/schemas/APIDateOnly"
+          }
+        },
+        "readOnly": false,
+        "writeOnly": true,
+        "required": [
+          "username",
+          "email",
+          "country",
+          "password",
+          "dateOfBirth"
+        ]
+      },
+      "APIResetToken": {
+        "description": "Defines the token that was sent via mail for resetting a users forgotten password",
+        "type": "string"
+      },
+      "APITag": {
+        "description": "a simple tag",
+        "type": "string",
+        "nullable": false
+      },
+      "APITagList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/APITag"
+        }
+      },
+      "APIAgeRating": {
+        "type": "string",
+        "enum": [
+          "G",
+          "PG",
+          "PG-13",
+          "R",
+          "NC-17"
+        ]
+      },
+      "APIAssetStatistics": {
+        "properties": {
+          "placementCount": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          },
+          "libraryAdditions": {
+            "type": "integer",
+            "readOnly": true,
+            "default": 0
+          }
+        }
+      },
+      "APINotification": {
+        "description": "Data included in a single notification",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "readOnly": true,
+            "example": "group:invite:received"
+          },
+          "title": {
+            "type": "string",
+            "readOnly": true
+          },
+          "description": {
+            "type": "string",
+            "readOnly": true
+          },
+          "data": {
+            "properties": {
+              "layer": {
+                "properties": {
+                  "id": {
+                    "$ref": "#/components/schemas/APIIDField"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "alias": {
+                    "type": "string"
+                  }
+                }
+              },
+              "inviter": {
+                "$ref": "#/components/schemas/APIUser"
+              }
+            }
+          },
+          "read": {
+            "type": "boolean",
+            "nullable": false
+          },
+          "meta": {
+            "type": "object"
+          },
+          "timestamps": {
+            "$ref": "#/components/schemas/APITimestamps"
+          }
+        },
+        "required": [
+          "id",
+          "read"
+        ]
+      },
+      "APIToken": {
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "readOnly": true
+          },
+          "expires_in": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "refresh_expires_in": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "refresh_token": {
+            "type": "string",
+            "readOnly": true
+          },
+          "token_type": {
+            "type": "string",
+            "readOnly": true
+          },
+          "not-before-policy": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "session_state": {
+            "type": "string",
+            "readOnly": true
+          },
+          "scope": {
+            "type": "string",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "access_token",
+          "expires_in",
+          "refresh-token",
+          "refresh_expires_in",
+          "token_type"
+        ]
+      },
+      "APIRole": {
+        "type": "string",
+        "enum": [
+          "none",
+          "owner",
+          "admin",
+          "editor",
+          "viewer"
+        ]
+      },
+      "APIBoolean": {
+        "type": "boolean",
+        "nullable": false
+      },
+      "APIUserWithRole": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/APIUser"
+          },
+          "role": {
+            "$ref": "#/components/schemas/APIRole"
+          }
+        }
+      },
+      "APIUserLayerMemberStatus": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/APIUser"
+          },
+          "isMember": {
+            "$ref": "#/components/schemas/APIBoolean"
+          }
+        }
+      },
+      "APIUserRoleList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/APIUserWithRole"
+        }
+      },
+      "APIUserLayerMemberList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/APIUserLayerMemberStatus"
+        }
+      },
+      "APIBaseError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "The error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "A human-readable error message"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "x-discriminator": {
+          "propertyName": "code",
+          "mapping": {
+            "400": "#/components/schemas/APIBadRequestError",
+            "403": "#/components/schemas/APIAccessDeniedError",
+            "404": "#/components/schemas/APINotFoundError",
+            "422": "#/components/schemas/APIValidationError",
+            "423": "#/components/schemas/APILockedError",
+            "429": "#/components/schemas/APITooManyRequestsError",
+            "503": "#/components/schemas/APIServiceUnavailableError"
+          }
+        }
+      },
+      "APIBadRequestError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIBaseError"
+          }
+        ],
+        "description": "400: The request was malformed"
+      },
+      "APIAccessDeniedError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIBaseError"
+          }
+        ],
+        "description": "403: Access denied"
+      },
+      "APINotFoundError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIBaseError"
+          }
+        ],
+        "description": "404: The specified resource was not found"
+      },
+      "APIValidationError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIBaseError"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "error_fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field_name": {
+                      "type": "string",
+                      "nullable": false,
+                      "readOnly": true
+                    },
+                    "validation_message": {
+                      "type": "string",
+                      "nullable": true,
+                      "readOnly": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "description": "422: Validation error"
+      },
+      "APILockedError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIBaseError"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "disable_timeout": {
+                "$ref": "#/components/schemas/APIDateTime"
+              }
+            }
+          }
+        ],
+        "description": "423: Locked error"
+      },
+      "APITooManyRequestsError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIBaseError"
+          }
+        ],
+        "description": "429: Too many requests"
+      },
+      "APIServiceUnavailableError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIBaseError"
+          }
+        ],
+        "description": "503: Service unavailable"
+      }
+    },
+    "requestBodies": {
+      "ProfileBody": {
+        "description": "The profile-data to be set",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIProfileData"
+            }
+          }
+        }
+      },
+      "ProfilePasswordBody": {
+        "description": "The password to be set",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "old_password": {
+                  "$ref": "#/components/schemas/APIPassword"
+                },
+                "new_password": {
+                  "$ref": "#/components/schemas/APIPassword"
+                }
+              },
+              "required": [
+                "new_password"
+              ]
+            }
+          }
+        }
+      },
+      "ImageBody": {
+        "description": "The image to be set",
+        "content": {
+          "image/png": {
+            "schema": {
+              "$ref": "#/components/schemas/APIImage"
+            }
+          }
+        }
+      },
+      "LayerBody": {
+        "description": "The layer-data to be set",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APILayer"
+            }
+          }
+        }
+      },
+      "SessionBody": {
+        "description": "The session-data to be set",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APISession"
+            }
+          }
+        }
+      },
+      "PlacementBody": {
+        "description": "The placement-data to be set",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIPlacement"
+            }
+          }
+        }
+      },
+      "QueryIDs": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/APIIDField"
+              }
+            }
+          }
+        }
+      },
+      "UsernameBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "username": {
+                  "$ref": "#/components/schemas/APIUsername"
+                }
+              }
+            }
+          }
+        }
+      },
+      "EmailBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "email": {
+                  "$ref": "#/components/schemas/APIEmail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RegisterBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIRegistrationData"
+            }
+          }
+        }
+      },
+      "ResetPasswordBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "password": {
+                  "$ref": "#/components/schemas/APIPassword"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ResetTokenBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIResetToken"
+            }
+          }
+        }
+      },
+      "LoginBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "username": {
+                  "$ref": "#/components/schemas/APIUsername"
+                },
+                "password": {
+                  "$ref": "#/components/schemas/APIPassword"
+                }
+              }
+            }
+          }
+        }
+      },
+      "APIUserRoleListBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIUserRoleList"
+            }
+          }
+        }
+      },
+      "UploadAssetBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "ageRating": {
+                  "$ref": "#/components/schemas/APIAgeRating"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "maxInstance": {
+                  "type": "integer"
+                },
+                "maxPlacements": {
+                  "type": "integer"
+                },
+                "onMarketplace": {
+                  "type": "boolean"
+                },
+                "tags": {
+                  "$ref": "#/components/schemas/APITagList"
+                }
+              }
+            }
+          }
+        }
+      },
+      "APIVirtualAssetBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIVirtualAsset"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "GoodBaseResponse": {
+        "description": "Base class for any \"good\" response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GoodBaseSchema"
+            }
+          }
+        }
+      },
+      "BadBaseResponse": {
+        "description": "Base class for any \"bad\" response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BadBaseSchema"
+            }
+          }
+        }
+      },
+      "BadRequestError": {
+        "description": "400: The request was malformed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIBadRequestError"
+            }
+          }
+        }
+      },
+      "AccessDeniedError": {
+        "description": "403: Access denied",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIAccessDeniedError"
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "404: The specified resource was not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APINotFoundError"
+            }
+          }
+        }
+      },
+      "ValidationError": {
+        "description": "422: Validation error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIValidationError"
+            }
+          }
+        }
+      },
+      "LockedError": {
+        "description": "423: Locked error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APILockedError"
+            }
+          }
+        }
+      },
+      "ServiceUnavailableError": {
+        "description": "503: The service is unavailable",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIServiceUnavailableError"
+            }
+          }
+        }
+      },
+      "APIAccesstokenResponse": {
+        "description": "Contains the access- and refresh-token along with other arguments",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/APIToken"
+                }
+              }
+            }
+          }
+        }
+      },
+      "APISessionResponse": {
+        "description": "Contains data of a session",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APISessionSchema"
+            }
+          }
+        }
+      },
+      "APIProfileResponse": {
+        "description": "Contains data of a profile",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIProfileSchema"
+            }
+          }
+        }
+      },
+      "APILayerResponse": {
+        "description": "Contains data of a layer",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APILayerSchema"
+            }
+          }
+        }
+      },
+      "APILayerListResponse": {
+        "description": "Contains data of multiple layers",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APILayerListSchema"
+            }
+          }
+        }
+      },
+      "APIAssetListResponse": {
+        "description": "Contains data of multiple assets",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIAssetListSchema"
+            }
+          }
+        }
+      },
+      "APIAssetListResponseWithInfos": {
+        "description": "Contains data of multiple assets, with additional infos if requested asset could not be found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/APIAssetListSchema"
+                },
+                {
+                  "$ref": "#/components/schemas/APIAdditionalInfos"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APIUserResponse": {
+        "description": "Contains public data of a single user",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIUserSchema"
+            }
+          }
+        }
+      },
+      "APIUserListResponse": {
+        "description": "Contains public data of multiple users",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIUserListSchema"
+            }
+          }
+        }
+      },
+      "APIPlacementResponse": {
+        "description": "Contains data of single placement",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIPlacementSchema"
+            }
+          }
+        }
+      },
+      "APIPlacementListResponse": {
+        "description": "Contains data of multiple placements",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIPlacementListSchema"
+            }
+          }
+        }
+      },
+      "APIAssetResponse": {
+        "description": "Contains data of single asset",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/APIAssetSchema"
+            }
+          }
+        }
+      },
+      "APIImageResponse": {
+        "description": "Contains image data",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/APIImageURL"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APICountryListResponse": {
+        "description": "Defines responses containing data of multiple APICountry elements",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/APICountryListSchema"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APIUsernameSuggestionsResponse": {
+        "description": "Contains data of username suggestions",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "suggestions": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/APIUsername"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APIAvailabilityResponse": {
+        "description": "Contains data regarding resource availability",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/APIAvailabilityFlag"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APIPasswordResetResponse": {
+        "description": "Might (in the future) contain data regarding forgotten password resetting",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GoodBaseSchema"
+            }
+          }
+        }
+      },
+      "APIResetTokenUserResponse": {
+        "description": "the username of the user for whom the token was created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/APIProfileData"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APINotificationListResponse": {
+        "description": "Defines responses containing data of multiple APINotification elements",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/APINotification"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APINotificationResponse": {
+        "description": "Defines responses containing data of a single APINotification element",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/APINotification"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APIUserRoleListResponse": {
+        "description": "Defines responses containing data of multiple users and their roles",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/APIUserRoleList"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APIUserLayerMemberStatusListResponse": {
+        "description": "Defines responses containing data of multiple users with their layer membership status",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/APIUserLayerMemberList"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APIRoleListResponse": {
+        "description": "Defines responses containing a list of available roles",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/APIRole"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "APIAssetCountResponse": {
+        "description": "Defines responses containing the number of assets in a layer",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/GoodBaseSchema"
+                },
+                {
+                  "properties": {
+                    "data": {
+                      "type": "integer",
+                      "nullable": false,
+                      "readOnly": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt_auth": {
+        "type": "http",
+        "description": "JWT authentication scheme using bearer tokens. Tokens are issued by the server upon successful authentication and are required for accessing protected resources.",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "jwt_auth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "assets",
+      "description": "Endpoints for any asset-related interactions"
+    },
+    {
+      "name": "auth",
+      "description": "Endpoints for any data that has to be requested by unauthenticated users"
+    },
+    {
+      "name": "layers",
+      "description": "Endpoints for any layer-related interactions like CRUD & follow"
+    },
+    {
+      "name": "library",
+      "description": "Endpoints for any library-related interactions"
+    },
+    {
+      "name": "marketplace",
+      "description": "Endpoints for any marketplace-related interactions"
+    },
+    {
+      "name": "placements",
+      "description": "Endpoints for any placement-related interactions like placing or moving objects in AR"
+    },
+    {
+      "name": "profile",
+      "description": "Endpoints for any profile-related interactions"
+    },
+    {
+      "name": "services",
+      "description": "Endpoints for any \"service\" endpoints"
+    },
+    {
+      "name": "sessions",
+      "description": "Endpoints for any session-related interactions (TBD)"
+    },
+    {
+      "name": "user",
+      "description": "Endpoints for personal, user-related features like friends and followers"
+    },
+    {
+      "name": "users",
+      "description": "Endpoints for features around globally available users"
+    }
+  ]
+}
